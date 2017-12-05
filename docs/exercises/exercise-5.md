@@ -60,7 +60,7 @@ Without converting (because that is almost like cheating ;) , define the same th
 <details>
 <summary>Snippet</summary>
 
-This is something interesting. Kotlin has a typesystem that by default does not allow null 
+This is something interesting. Kotlin has a typesystem that by default does not allow undefined 
 values. This means we need to work around the fact that we cannot initialize the tested class
 and mocks at compile time -- we do this at runtime.
 
