@@ -1,7 +1,5 @@
-### Next steps
+### Your'e done!
 
-Continue with exercise-5:
+This is the final, converted application.
 
-```
-git checkout exercise-5
-```
+Thank you for participating!
