@@ -82,6 +82,7 @@ private lateinit var mockBasketRepository: BasketRepository
 private lateinit var mockProductRepository: ProductRepository
 ```
 </details>
+<br>
 
 **Exercise** Write a simple test for the `getBasket()` operation.
 
