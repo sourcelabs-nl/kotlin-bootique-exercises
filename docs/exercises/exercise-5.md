@@ -300,7 +300,7 @@ inline fun <reified T> TestRestTemplate.get(url: String): T = this.exchange(
 </details> 
 
 If you were able to succesfully make the changes to the method above, you can then implement
-the test like so:
+the full test like listed below. The (inferred) type for `val products` is `List<Product>`. We should get a result of four products (which is the default number of products when starting the service). Let's do a quick assert that this expectation matches.
 
 ```kotlin
 @Test
@@ -314,3 +314,5 @@ Running it should succeed. This should give you some insight in how Kotlin integ
 the existing test setup you may already have, how to deal with reserved names and how to write
 and extension function with reified generics to allow convenient and expressive usage of an 
 injected rest template.
+
+Of course, we are well aware that these tests are somewhat representative of the real-world tests you'll be building, but lack refinement. We hope this will give you the insights you'll need to be able to write some solid tests in Kotlin and at the same time leverage the language features to reduce the volume of code you'll need to write to achieve this.
