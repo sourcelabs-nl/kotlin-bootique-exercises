@@ -30,7 +30,7 @@ public class BootiqueControllerTest {}
 <details>
 <summary>Snippet</summary>
 
-In Kotlin we can refer to classes with the double colon notation, `MockitoJUnitRunner::class`
+In Kotlin we can refer to classes with the double colon notation: `MockitoJUnitRunner::class`
 
 ```kotlin
 @RunWith(MockitoJUnitRunner::class)
