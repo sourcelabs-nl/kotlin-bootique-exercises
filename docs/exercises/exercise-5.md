@@ -30,12 +30,14 @@ public class BootiqueControllerTest {}
 <details>
 <summary>Snippet</summary>
 
+In Kotlin we can refer to classes with the double colon notation, `MockitoJUnitRunner::class`
+
 ```kotlin
 @RunWith(MockitoJUnitRunner::class)
 class BootiqueControllerTest
 ```
 </details>
-
+<br>
 **Exercise** Define the instance we are testing and the mocks Mockito should inject
 
 We are now going to define the unit we are testing and the mocks required by this unit
