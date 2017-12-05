@@ -180,8 +180,7 @@ The first step would be to convert the test to Kotlin code, so do so now.
 
 **Exercise**: Modify the test setup for calling an endpoint in the running bootique service
 
-We are going to test the app by calling an endpoint, so we'll be creating a bit of an
-application test. We are first going to tell Spring Boot to start a server (on a random port)
+We are going to test the app by calling an endpoint, so we'll be modifying the test. We are first going to tell Spring Boot to start a server (on a random port)
 and will wire in a TestRestTemplate to call the service.
 
 First, we'll need to configure the web environment to test against. Modify the `@SpringBootTest`
