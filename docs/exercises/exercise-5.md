@@ -130,8 +130,9 @@ fun `test retrieving basket functionality`() {
 }
 ```
 </details>
+<br>
 
-**Pro tip if you are stuck: Write the test in java and convert/copy it into a kotlin file. The conversion
+**Protip if you are stuck: Write the test in java and convert/copy it into a kotlin file. The conversion
 will be automatic and can help you figuring out how to write some of the code.** 
 
 **Exercise** Remove the need for backticks around the when
