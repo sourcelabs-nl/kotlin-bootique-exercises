@@ -239,19 +239,15 @@ typed return value for the template. Consider the following call:
 restTemplate.exchange("/products", HttpMethod.GET, null, object: ParameterizedTypeReference<List<Product>>() {})
 ```
 
-This will return a `ResponseEntity<List<Product>>` because the type is enforced thanks to the
-ParametrizedTypeReference. It is a bit verbose though, and requires the use of an inner class.
+This will return a `ResponseEntity<List<Product>>` because the type is enforced thanks to the ParametrizedTypeReference. It is a bit verbose though, and requires the use of an anonymous inner class.
 
-We could try using a convenience method this class provides, but that won't work like this:
+As a final exercise, let's leverage three interesting features Kotlin has to offer: Extension functions and inlining + reified generics.
 
-But -- what if we could call an endpoint like this:
+What if we could define an (extension) function to call an endpoint like this:
 
 ```kotlin
 val products = restTemplate.get<List<Product>>("/products")
 ```
-
-That would be quite nice. As a final exercise, let's leverage three interesting features Kotlin
-has to offer: Extension functions and inlining + reified generics.
 
 Extension functions allow us to 'add' functionality to an already existing class. This is no
 bytecode magic, but merely some syntactic sugar that creates a function that takes the instance
