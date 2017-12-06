@@ -11,6 +11,7 @@ class Basket {
 
     fun getOrderItems() = Collections.unmodifiableList(items)
 
+
     /**
      * Calculates the sum of the order item totalPrice.
      * @return BigDecimal.ZERO in case of an empty basket.
