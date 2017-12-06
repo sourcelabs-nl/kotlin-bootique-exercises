@@ -8,20 +8,14 @@ Let's start out by finally adding a simple unit test. Normally of course we woul
 
 **Exercise** Implement a test class for the BootiqueController
 
-Most of you working in intellij will be familiar with this and probably know the shortcut
-to trigger the 'create test' intention. You can also create it manually in the source/test/java
-folder of course. Name the file BootiqueControllerTest, and put it in the same package as the
-class we are going to test.
+In the `src/main/test` folder the file BootiqueControllerTest should be available. It has no contents yet, this is left for you to provide.
 
-We are going to be using a mocking framework to mock out our dependencies. Spring test 
-conveniently bundles Mockito so let's use that. First thing to do now, is to define the 
-MockitoRunner as the testrunner for your unit test. Add it now.
+We are going to be using a mocking framework to mock out our dependencies. Spring test conveniently bundles Mockito so let's use that. First thing to do now, is to define the MockitoRunner as the testrunner for your unit test. Add it now.
 
-In java:
+In java you would do something like the listing below. Define the test class and add the runner declaration to it.
 
 ```java
 @RunWith(MockitoJUnitRunner.class)
-public class BootiqueControllerTest {}
 ```
 
 <details>
@@ -38,8 +32,9 @@ class BootiqueControllerTest
 
 **Exercise** Define the instance we are testing and the mocks Mockito should inject
 
-We are now going to define the unit we are testing and the mocks required by this unit
-to function. In Java, we'd do something like this:
+We are now going to define the unit we are testing and the mocks required by this unitto function. 
+
+In Java, you could end up with something similar to the listing below.
 
 ```java
 @InjectMocks
@@ -52,17 +47,29 @@ private ProductRepository mockProductRepository;
 private ProductRepository mockBasketRepository;
 ```
 
-Without converting (because that is almost like cheating ;) , define the same thing in Kotlin.
+Without just converting (because that is almost like cheating ;), define the same thing in Kotlin.
 
 <details>
 <summary>Possible solution</summary>
 
-This is something interesting. Kotlin has a well-defined typesystem that by default does not allow undefined values or variables. This means we need to work around the fact that we cannot initialize the tested class and mocks at compile time -- Mockito provides the mocks and initializes the test class at runtime.
+This is something interesting. Kotlin has a well-defined typesystem that by default does not allow undefined values or variables. This means we need to work around the fact that we cannot initialize the tested class and mocks at compile time -- Mockito provides the mocks and initializes the test class at runtime. Luckily, we have options.
 
-Kotlin defines a convenient way to do this, by leveraging the lateinit keyword. This keyword can also be used for property/field injection at runtime (although in most cases it makes sense to prefer constructor or setting injection over field injection, elminating the need for this approach).
+If you copied and pasted the Java code listed above, the conversion would have resulted in something like the listing below. This will work, but it forces you to define the property as nullable `BootiqueController?` when it actually shouldn't be null due to Mockito's magic. Additionally, you'd have to assign a default value of `null` to it, which isn't too pretty.
 
-When using lateinit you logically have to specify the target type for the variable, as this
-can not be inferred.
+```kotlin
+@InjectMocks
+private val bootiqueController: BootiqueController? = null
+
+@Mock
+private val mockProductRepository: ProductRepository? = null
+
+@Mock
+private val mockBasketRepository: ProductRepository? = null
+```
+
+Kotlin defines another convenient way to do this, by leveraging the lateinit keyword. This keyword can also be used for property/field injection at runtime (although in most cases it makes much more sense to prefer constructor or setter injection over field injection, elminating the need for this approach).
+
+In case you are using lateinit you logically have to specify the target type for the variable, as this can not be inferred.
 
 ```kotlin
 @InjectMocks
@@ -79,8 +86,7 @@ private lateinit var mockProductRepository: ProductRepository
 
 **Exercise** Write a simple test for the `getBasket()` operation.
 
-To do this, we'd have to use the basketRepository mock, and instruct it to behave in a certain
-way. This is the test you could possibly write in java:
+To do this, we'd have to use the basketRepository mock, and instruct it to behave in a certain way. This is the test you could possibly write in java:
 
 ```java
 @Test
@@ -125,7 +131,7 @@ fun `test retrieving basket functionality`() {
 </details>
 <br>
 
-**Protip if you are stuck: Write the test in java and convert/copy it into a kotlin file. The conversion
+**Pro-tip if you are stuck: Write the test in java and convert/copy it into a kotlin file. The conversion
 will be automatic and can help you figuring out how to write some of the code.** 
 
 **Exercise** Remove the need for backticks around the when
@@ -180,9 +186,7 @@ First, we'll need to configure the web environment to test against. Modify the `
 annotation like below.
 
 ```java
-@SpringBootTest(
-        webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT
-)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 ```
 
 Secondly, wire in an instance of the `TestRestTemplate` that will be provided to you by spring
@@ -201,9 +205,7 @@ Adapt the logic above to Kotlin for use in the `BootiqueApplicationTests`.
 Here's the Kotlin implementation for this:
 
 ```kotlin
-@SpringBootTest(
-        webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT
-)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class BootiqueApplicationTest {
 
     @Autowired
@@ -314,7 +316,8 @@ Of course, we are well aware that these tests are somewhat representative of the
 
 For the final implementation of this service including the tests above in Kotlin, checkout the `final` branch.
 
-Thank you for participating! 
+## Thank you for participating! ##
 
-Questions? Come find us, we'll do all we can to clarify anything unclear. 
-Looking for a job, a change of scenery? Come find us ;)
+**Questions?** Come find us, we'll do all we can to clarify anything unclear. 
+**Looking for a job, a change of scenery?** Get in touch with us so we can discuss the possibilities.
+**Want us to provide this workshop for your whole project team?** Let us know, we'll make it happen! If you provide the location, we'll provide the material. No additional costs.
