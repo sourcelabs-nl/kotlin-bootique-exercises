@@ -274,7 +274,7 @@ Having done this, we can now refer to the generic type as usual, but we can also
 type at runtime, which means we can actually use `T::class.java` to get the runtime type of 
 the class!
 
-Putting it all together, we can now conveniently call get with just the url path, and the specified generic type, like this: `restTemplate.get<List<Product>>("/products")`. We can use generics to use this `object: ParameterizedTypeReference<T>() {}`. 
+Putting it all together, we can now conveniently call get with just the url path, and the specified generic type, like this: `restTemplate.get<List<Product>>("/products")`. We can use the generics to apply to the `ParametrizedTypeReference<T>`. We have to create an inner class for this, for which Kotlin has a somewhat odd notation: `object: ParameterizedTypeReference<T>() {}`. 
 
 ```kotlin
 inline fun <reified T> TestRestTemplate.get(url: String): T = this.exchange(
