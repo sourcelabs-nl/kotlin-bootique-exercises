@@ -171,19 +171,15 @@ testing Kotlin with Mockito a breeze. It adds some simple syntactic sugar where 
 
 **Exercise**: Convert BootiqueApplicationTests.java to Kotlin using IntelliJ (menu > Code > Convert Java File to Kotlin File).
 
-This application stems from [start.spring.io](http://start.spring.io) and because of that it features a
-test setup already, for application tests. We are converting our codebase to Kotlin though, so that means
-we can't really leave this one in its Java form. 
+This application stems from [start.spring.io](http://start.spring.io) and because of that it features a test setup already, for application tests. We are converting our codebase to Kotlin though, so that means we can't really leave this one in its Java form. That would just be silly. 
 
 The first step would be to convert the test to Kotlin code, so do so now.
 
 **Exercise**: Modify the test setup for calling an endpoint in the running bootique service
 
-We are going to test the app by calling an endpoint, so we'll be modifying the test. We are first going to tell Spring Boot to start a server (on a random port)
-and will wire in a TestRestTemplate to call the service.
+We are going to test the app by calling an endpoint, so we'll be modifying the test. We are first going to tell Spring Boot to start a server (on a random port) and will wire in a TestRestTemplate to call the service.
 
-First, we'll need to configure the web environment to test against. Modify the `@SpringBootTest`
-annotation like below.
+First, we'll need to configure the web environment to test against. Modify the `@SpringBootTest` annotation like below.
 
 ```java
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -209,29 +205,25 @@ Here's the Kotlin implementation for this:
 class BootiqueApplicationTest {
 
     @Autowired
-    private lateinit var restTemplate: TestRestTemplate 
+    private lateinit var testRestTemplate: TestRestTemplate 
 ```
 </details>
 
 Run the setup, the context should load, injection of the `TestRestTemplate` should succeed.
 
-**Exercise**: Write the test actual test
+**Exercise**: Add the actual test
 
-Let's define the test like so. Implement the body of this function, by using the `TestRestTemplate` 
-to call the service.
+Let's define the test. Implement the body of this function, by using the `TestRestTemplate` to call the service.
 
 ```kotlin
 @Test
-fun `test get products endpoint`() {
-}
+fun `test get products endpoint`() {}
 ```
 
-The `/products` endpoint returns a list of products. In order to employ automatic conversion
-to List<Product> we can use a class called `ParameterizedTypeReference` which will allowed a 
-typed return value for the template. Consider the following call:
+The `/products` endpoint returns a list of products. In order to employ automatic conversion to List<Product> we can use a class called `ParameterizedTypeReference` which will allowed a typed return value for the template. Consider the following call:
 
 ```kotlin
-restTemplate.exchange("/products", HttpMethod.GET, null, object: ParameterizedTypeReference<List<Product>>() {})
+testRestTemplate.exchange("/products", HttpMethod.GET, null, object: ParameterizedTypeReference<List<Product>>() {})
 ```
 
 This will return a `ResponseEntity<List<Product>>` because the type is enforced thanks to the ParametrizedTypeReference. It is a bit verbose though, and requires the use of an anonymous inner class.
@@ -241,7 +233,7 @@ As a final exercise, let's leverage three interesting features Kotlin has to off
 What if we could define an (extension) function to call an endpoint like this:
 
 ```kotlin
-val products = restTemplate.get<List<Product>>("/products")
+val products = testRestTemplate.get<List<Product>>("/products")
 ```
 
 Extension functions allow us to 'add' functionality to an already existing class. This is no
@@ -261,7 +253,7 @@ in this case with a void return type. It also defines generics. Modify this call
 call it like listed below.
 
 ```kotlin
-val products = restTemplate.get<List<Product>>("/products") // Usage
+val products = testRestTemplate.get<List<Product>>("/products") // Usage
 
 fun <T> TestRestTemplate.get(url: String): T {
     return ...
@@ -300,15 +292,12 @@ the full test like listed below. The (inferred) type for `val products` is `List
 ```kotlin
 @Test
 fun `test get products endpoint`() {
-    val products = restTemplate.get<List<Product>>("/products")
+    val products = testRestTemplate.get<List<Product>>("/products")
     assertThat(products.size).isEqualTo(4)
 }
 ```
 
-Running it should succeed. This should give you some insight in how Kotlin integrates well with
-the existing test setup you may already have, how to deal with reserved names and how to write
-and extension function with reified generics to allow convenient and expressive usage of an 
-injected rest template.
+Running it should succeed. This should give you some insight in how Kotlin integrates well with the existing test setup you may already have, how to deal with reserved names and how to write and extension function with reified generics to allow convenient and expressive usage of an injected rest template.
 
 Of course, we are well aware that these tests are somewhat representative of the real-world tests you'll be building, but lack refinement. We hope this will give you the insights you'll need to be able to write some solid tests in Kotlin and at the same time leverage the language features to reduce the volume of code you'll need to write to achieve this.
 
