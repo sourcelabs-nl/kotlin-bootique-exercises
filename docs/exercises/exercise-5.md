@@ -290,7 +290,7 @@ If you were able to succesfully make the changes to the method as listed above, 
 fun `test bootique get products endpoint`() {
     val products = restTemplate.get<List<Product>>("/products")
     assertThat(products.size).isEqualTo(4)
-    assertThat(products[0].title).isEqualTo("123")
+    assertThat(products[0].title).isEqualTo("iPhone X")
 }
 ```
 
