@@ -217,7 +217,7 @@ Let's define the test. Implement the body of this function, by using the `TestRe
 
 ```kotlin
 @Test
-fun `test get products endpoint`() {}
+fun `test bootique get products endpoint`() {}
 ```
 
 The `/products` endpoint returns a list of products. In order to employ automatic conversion to List<Product> we can use a class called `ParameterizedTypeReference` which will allowed a typed return value for the template. Consider the following call:
@@ -274,30 +274,29 @@ Having done this, we can now refer to the generic type as usual, but we can also
 type at runtime, which means we can actually use `T::class.java` to get the runtime type of 
 the class!
 
-Putting it all together, we can now conveniently call get with just the url path, and the
-specified generic type, like this: `restTemplate.get<List<Product>>("/products")`. Because
-of the reified generics we can use `ParameterizedTypeReference.forType<T>(T::class.java)` 
-eliminating the need for an anonymous inner class.
+Putting it all together, we can now conveniently call get with just the url path, and the specified generic type, like this: `restTemplate.get<List<Product>>("/products")`. We can use generics to use this `object: ParameterizedTypeReference<T>() {}`. 
 
 ```kotlin
 inline fun <reified T> TestRestTemplate.get(url: String): T = this.exchange(
-        url, HttpMethod.GET, null, ParameterizedTypeReference.forType<T>(T::class.java)
+        url, HttpMethod.GET, null, object: ParameterizedTypeReference<T>() {}
 ).body
 ```
 </details> 
 
-If you were able to succesfully make the changes to the method above, you can then implement
-the full test like listed below. The (inferred) type for `val products` is `List<Product>`. We should get a result of four products (which is the default number of products when starting the service). Let's do a quick assert that this expectation matches.
+If you were able to succesfully make the changes to the method as listed above, you can then implement the full test like listed below. The (inferred) type for `val products` is `List<Product>`. We should get a result of four products (which is the default number of products when starting the service). Let's do a quick assert that this expectation matches.
 
 ```kotlin
 @Test
-fun `test get products endpoint`() {
-    val products = testRestTemplate.get<List<Product>>("/products")
+fun `test bootique get products endpoint`() {
+    val products = restTemplate.get<List<Product>>("/products")
     assertThat(products.size).isEqualTo(4)
+    assertThat(products[0].title).isEqualTo("123")
 }
 ```
 
 Running it should succeed. This should give you some insight in how Kotlin integrates well with the existing test setup you may already have, how to deal with reserved names and how to write and extension function with reified generics to allow convenient and expressive usage of an injected rest template.
+
+But, if we do not use reified generics and inline the function as we did before, it will lose all type information at runtime! Removing `inline` and `reified` will change the response. Instead of a `List<Product>`, the return type will be a `List<java.util.LinkedHashMap?`. Run the test again, and see that it fails on the assert for product title; these types do not match anymore due to erasure. Quite a useful feature, retaining this type information at runtime.
 
 Of course, we are well aware that these tests are somewhat representative of the real-world tests you'll be building, but lack refinement. We hope this will give you the insights you'll need to be able to write some solid tests in Kotlin and at the same time leverage the language features to reduce the volume of code you'll need to write to achieve this.
 
