@@ -321,4 +321,7 @@ Of course, we are well aware that these tests are somewhat representative of the
 
 For the final implementation of this service including the tests above in Kotlin, checkout the `final` branch.
 
-Thank you for participating!
+Thank you for participating! 
+
+Questions? Come find us, we'll do all we can to clarify anything unclear. 
+Looking for a job, a change of scenery? Come find us ;)
