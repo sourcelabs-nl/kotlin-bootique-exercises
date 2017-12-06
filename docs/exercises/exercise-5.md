@@ -298,6 +298,70 @@ Running it should succeed. This should give you some insight in how Kotlin integ
 
 But, if we do not use reified generics and inline the function as we did before, we will lose all type information at runtime! Removing `inline` and `reified` will change the response. Instead of a `List<Product>`, the return type will be a `List<java.util.LinkedHashMap>`. Run the test again, and see that it fails on the assert for `products[0].title`; `LinkedHashMap` does not define a property called `title`. All in all, quite a useful feature, retaining this type information at runtime, which can come in handy when trying to work around the type erasure that haunts Java.
 
+## Bonus exercise ##
+
+**Exercise** As a final exercise we can also test a post, to the products endpoint for example.This shows off the ability Kotlin has to interpolate (multiline) strings. We are going to be testing the endpoint that adds an article to the basket. Take the test below. Notice that is leverages a multiline string, declared with `"""`. As with any string in Kotlin, we can use string interpolation to set values in the string directly. These are visible as `$productId` and `$quantity` as is visible in the example below. Anything that's accessible in the scope of the method is usable for String interpolation. You could also call methods, such as `${productId.toUpperCase()}`.
+
+```kotlin
+@Test
+fun `add product to basket`() {
+    val productId = "1"
+    val quantity = 2
+
+    val response = testRestTemplate.postJson<String>("/baskets/1/items", """
+            {
+                "productId":"$productId",
+                "quantity": $quantity
+            }
+    """)
+
+    assertThat(response.statusCode.value()).isEqualTo(200)
+}
+```
+
+Now, as an assignment, build the implementation of the extension function `postJson()`. Here's something to get you started. Notice the type of the response is omitted here, and has to be determined in the method call. You can get this to work without modifying the test code, all works needs to be done inside the extension function.
+
+As a hint: reified generics can help you out here too!
+
+```
+fun <T> TestRestTemplate.postJson(url: String, json: String): ResponseEntity<T> {
+    val headers = HttpHeaders()
+    headers.contentType = MediaType.APPLICATION_JSON
+    val entity = HttpEntity(json, headers)
+    return this.postForEntity(url, entity, <CLASS?!>)
+}
+```
+
+<details>
+<summary>Suggested solution</summary>
+
+Here we go again with the reified generics. When using reified generics, you don't only get to hold on to the type information at runtime, as an added bonus you can also extract the class from the generic type, which is nice to define the return type here. Using `T::class.java` will return `java.lang.String` in this case, as we are calling it from the test with `String` as the defined generic type. This is very useful to have access to at runtime.
+
+```kotlin
+inline fun <reified T> TestRestTemplate.postJson(url: String, json: String): ResponseEntity<T> {
+    val headers = HttpHeaders()
+    headers.contentType = MediaType.APPLICATION_JSON
+    val entity = HttpEntity(json, headers)
+    return this.postForEntity(url, entity, T::class.java)
+}
+```
+
+Please note, we used this:
+
+`this.exchange(url, HttpMethod.GET, null, object: ParameterizedTypeReference<T>() {})` 
+
+in the previous example, why not replace that with:
+
+`this.exchange(url, HttpMethod.GET, null, T::class.java`
+
+-- The answer is: because we can't. In this case we'll pass in `List` as the expected resulting class, and this will break. Using the full generic type passed to the function as `T` in the `ParameterizedTypeReference` wíll work. This allows us to have a solution that works for domain types such as `Product` and lists of these types such as `List<Product>` alike.
+
+</details> 
+
+## That's it for now ##
+
+That's it, you've done it!
+
 Of course, we are well aware that these tests are somewhat representative of the real-world tests you'll be building, but lack refinement. We hope this will give you the insights you'll need to be able to write some solid tests in Kotlin and at the same time leverage the language features to reduce the volume of code you'll need to write to achieve this.
 
 **So, we encourage you to experiment, experiment and experiment some more. Kotlin might just be that Java replacement you didn't know you'd like so much.**
