@@ -1,15 +1,12 @@
 ## Exercise 5: Using Kotlin in your test code
 
-Last but not least, convert the test code from Java to Kotlin and add a Unit test. As with any type
-of application, we really, really, really encourage testing. It's just a good idea.
+Last but not least, convert the test code from Java to Kotlin and add a Unit test. As with any type of application, we really, really, really encourage testing. It's just a good idea. We've seen many tutorials and blogs covering interesting features of a language, but using these features for writing tests is generally not covered. The Kotlin-Java interoperability will make this easy for the most part, but there are some things to know about that may help in implementing these tests.
 
 ### Write a simple unit test
 
-Let's start out by finally adding a simple unit test. Normally we would strive towards maximum (branch)
-coverage but for now we'll just settle for being able to test one of our components. Let's start by
-writing a test for the BootiqueController class.
+Let's start out by finally adding a simple unit test. Normally of course we would strive towards sensible (branch) coverage targets, but for now we'll just settle for being able to test one of our components. Let's start by writing a test for the BootiqueController class.
 
-**Exercise** Create a test class for the BootiqueController
+**Exercise** Implement a test class for the BootiqueController
 
 Most of you working in intellij will be familiar with this and probably know the shortcut
 to trigger the 'create test' intention. You can also create it manually in the source/test/java
@@ -60,13 +57,9 @@ Without converting (because that is almost like cheating ;) , define the same th
 <details>
 <summary>Possible solution</summary>
 
-This is something interesting. Kotlin has a typesystem that by default does not allow undefined 
-values. This means we need to work around the fact that we cannot initialize the tested class
-and mocks at compile time -- we do this at runtime.
+This is something interesting. Kotlin has a well-defined typesystem that by default does not allow undefined values or variables. This means we need to work around the fact that we cannot initialize the tested class and mocks at compile time -- Mockito provides the mocks and initializes the test class at runtime.
 
-Kotlin defines a simple way to do this, by leveraging the lateinit keyword. This keyword
-can also be used for property/field injection at runtime (although you should probably avoid
-doing that anyway).
+Kotlin defines a convenient way to do this, by leveraging the lateinit keyword. This keyword can also be used for property/field injection at runtime (although in most cases it makes sense to prefer constructor or setting injection over field injection, elminating the need for this approach).
 
 When using lateinit you logically have to specify the target type for the variable, as this
 can not be inferred.
@@ -168,7 +161,7 @@ You can also add a nifty library to your codebase named [Mockito-Kotlin-Library]
 which enables you to use mockito when as whenever but also has some very nice functions added to make
 testing Kotlin with Mockito a breeze. It adds some simple syntactic sugar where it makes sense.
 
-### Convert BootiqueApplicationTests.java to Kotlin
+### Write an application test
 
 **Exercise**: Convert BootiqueApplicationTests.java to Kotlin using IntelliJ (menu > Code > Convert Java File to Kotlin File).
 
