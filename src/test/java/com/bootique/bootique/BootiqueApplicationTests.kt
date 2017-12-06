@@ -14,17 +14,15 @@ import org.springframework.test.context.junit4.*
  * This a very poorly written app, it has no decent tests :-(
  */
 @RunWith(SpringRunner::class)
-@SpringBootTest(
-        webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT
-)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class BootiqueApplicationTest {
 
     @Autowired
-    private lateinit var restTemplate: TestRestTemplate
+    private lateinit var testRestTemplate: TestRestTemplate
 
     @Test
     fun `test get products endpoint`() {
-        val products = restTemplate.get<List<Product>>("/products")
+        val products = testRestTemplate.get<List<Product>>("/products")
         assertThat(products.size).isEqualTo(4)
     }
 }
