@@ -28,7 +28,7 @@ public class BootiqueControllerTest {}
 ```
 
 <details>
-<summary>Possible solution</summary>
+<summary>Suggested solution</summary>
 
 In Kotlin we can refer to classes with the double colon notation: `MockitoJUnitRunner::class`
 
@@ -106,7 +106,7 @@ public void testRetrieveBasket() {
 Now create the Kotlin equivalent.
 
 <details>
-<summary>Possible solution</summary>
+<summary>Suggested solution</summary>
 
 The code is not that different from the Java, but there's catch! In Kotlin `when` is a keyword!
 Luckily, this was anticipated so in Kotlin we can still use function calls with backticks 
@@ -150,7 +150,7 @@ It is a convenient static function, so we can write a Kotlin function that wraps
 definition of `when` with `whenever`.
 
 <details>
-<summary>Possible solution</summary>
+<summary>Suggested solution</summary>
 
 Here's the Kotlin code for that, you could add it to the test sources for convenient usage.
 
@@ -203,7 +203,7 @@ private TestRestTemplate testRestTemplate;
 Adapt the logic above to Kotlin for use in the `BootiqueApplicationTests`.
 
 <details>
-<summary>Possible solution</summary>
+<summary>Suggested solution</summary>
 
 Here's the Kotlin implementation for this:
 
@@ -274,7 +274,7 @@ fun <T> TestRestTemplate.get(url: String): T {
 ``` 
 
 <details>
-<summary>Possible solution</summary>
+<summary>Suggested solution</summary>
 
 There are two main modifications required to the method to use reified generics. One is defining
 the method to be inlined. You cannot reify generics without inlining, due to JVM type erasure.
