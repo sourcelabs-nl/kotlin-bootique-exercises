@@ -334,7 +334,7 @@ fun <T> TestRestTemplate.postJson(url: String, json: String): ResponseEntity<T> 
 <details>
 <summary>Suggested solution</summary>
 
-Here we go again with the reified generics. When using reified generics, you don't only get to hold on to the type information at runtime, as an added bonus you can also extract the class from the generic type, which is nice to define the return type here. Using `T::class.java` will return `java.lang.String` in this case, as we are calling it from the test with `String` as the defined generic type. This is very useful to have access to at runtime.
+Reified generics to the rescue again! When using reified generics, you don't only get to hold on to the type information at runtime, as an added bonus you can also extract the class from the generic type, which is nice to define the return type here. Using `T::class.java` will return `java.lang.String` in this case, as we are calling it from the test with `String` as the defined generic type. In this use case it is convenient to have access to this information at runtime.
 
 ```kotlin
 inline fun <reified T> TestRestTemplate.postJson(url: String, json: String): ResponseEntity<T> {
