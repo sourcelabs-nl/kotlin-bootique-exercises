@@ -351,9 +351,9 @@ Please note, we used this:
 
 in the previous example, why not replace that with:
 
-`this.exchange(url, HttpMethod.GET, null, T::class.java`
+`this.exchange(url, HttpMethod.GET, null, T::class.java)`
 
--- The answer is: because we can't. In this case we'll pass in `List` as the expected resulting class, and this will break. Using the full generic type passed to the function as `T` in the `ParameterizedTypeReference` wíll work. This allows us to have a solution that works for domain types such as `Product` and lists of these types such as `List<Product>` alike. Give it a try to see what happens.
+-- The answer is: because we can't. In this case we'll pass in `List` as the expected resulting class, and this will break. Using the full generic type passed to the function as `T` in the `ParameterizedTypeReference` wíll work. This allows us to have a solution that works for domain types such as `Product` and lists of these types such as `List<Product>` alike. Give it a try to see what happens for yourself.
 
 </details> 
 
