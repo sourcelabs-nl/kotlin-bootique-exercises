@@ -29,7 +29,7 @@ val totalPrice: BigDecimal
     get() = items.sumBy { item -> item.totalPrice }
 ```
 
-We could even get rid of the item declaration since kotlin exposes a variable called it which revers to the current item.
+We could even get rid of the item declaration since kotlin exposes a variable called it which refers to the current item.
 
 ```kotlin
 val totalPrice: BigDecimal 
