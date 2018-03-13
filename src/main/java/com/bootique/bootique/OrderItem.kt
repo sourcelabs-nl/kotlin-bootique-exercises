@@ -12,7 +12,5 @@ data class OrderItem(val productId: String, val quantity: Int, val price: BigDec
      *
      * @return BigDecimal.ZERO if no price is defined
      */
-    fun getTotalPrice() = price * quantity
-
-    operator fun BigDecimal.times(quantity: Int) = this.times(BigDecimal(quantity))
+    val totalPrice = price * quantity
 }
