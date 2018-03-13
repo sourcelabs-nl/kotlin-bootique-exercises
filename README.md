@@ -1,3 +1,3 @@
-## Kotlin Bootique
+## Kotlin Bootique - Workshop
 
-Documentation can be found in the [introduction](./docs/introduction.md) guide.
+Documentation can be found at: [https://github.com/sourcelabs-nl/kotlin-bootique/](https://github.com/sourcelabs-nl/kotlin-bootique/)
