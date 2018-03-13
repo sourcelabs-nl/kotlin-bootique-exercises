@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*
 @RestController
 class BootiqueController(private val productRepository: ProductRepository, private val basketRepository: BasketRepository) {
 
-    @GetMapping("/", "/products")
+    @GetMapping("/products")
     fun products() = productRepository.getProducts()
 
     @GetMapping("/baskets/{id}")
