@@ -28,10 +28,11 @@ class BootiqueApplication {
                 .build()
     }
 
-    /**
-     * Runs the Spring boot application.
-     */
     companion object {
+
+        /**
+         * Runs the Spring boot application.
+         */
         @JvmStatic
         fun main(args: Array<String>) {
             SpringApplication.run(BootiqueApplication::class.java, *args)

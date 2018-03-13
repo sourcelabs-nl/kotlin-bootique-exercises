@@ -6,5 +6,13 @@ import java.math.BigDecimal
  * Represents the product, quantity and price of an item in the Basket.
  */
 data class OrderItem(val productId: String, val quantity: Int, val price: BigDecimal = BigDecimal.ZERO) {
-    val totalPrice = price * quantity
+
+    /**
+     * Calculates the totalPrice of this item: price * quantity
+     *
+     * @return BigDecimal.ZERO if no price is defined
+     */
+    fun getTotalPrice() = price * quantity
+
+    operator fun BigDecimal.times(quantity: Int) = this.times(BigDecimal(quantity))
 }
