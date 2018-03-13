@@ -14,20 +14,24 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2
  */
 @SpringBootApplication
 @EnableSwagger2
-class BootiqueApplication
+class BootiqueApplication {
 
-/**
- * Runs the Spring boot application.
- */
-fun main(args: Array<String>) {
-    runApplication<BootiqueApplication>(*args) {
-        beans {
-            bean<Docket> {
-                Docket(DocumentationType.SWAGGER_2)
-                        .select()
-                        .apis(RequestHandlerSelectors.any())
-                        .paths(PathSelectors.any())
-                        .build()
+    companion object {
+        /**
+         * Runs the Spring boot application.
+         */
+        @JvmStatic
+        fun main(args: Array<String>) {
+            runApplication<BootiqueApplication>(*args) {
+                beans {
+                    bean<Docket> {
+                        Docket(DocumentationType.SWAGGER_2)
+                                .select()
+                                .apis(RequestHandlerSelectors.any())
+                                .paths(PathSelectors.any())
+                                .build()
+                    }
+                }
             }
         }
     }
