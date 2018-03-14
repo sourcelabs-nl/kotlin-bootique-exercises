@@ -1,14 +1,14 @@
 package com.bootique.bootique
 
-import org.assertj.core.api.Assertions.*
-import org.junit.*
-import org.junit.runner.*
-import org.springframework.beans.factory.annotation.*
-import org.springframework.boot.test.context.*
-import org.springframework.boot.test.web.client.*
-import org.springframework.core.*
+import org.assertj.core.api.Assertions.assertThat
+import org.junit.Test
+import org.junit.runner.RunWith
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.boot.test.web.client.TestRestTemplate
+import org.springframework.core.ParameterizedTypeReference
 import org.springframework.http.*
-import org.springframework.test.context.junit4.*
+import org.springframework.test.context.junit4.SpringRunner
 
 /**
  * This a very poorly written app, it has no decent tests :-(
@@ -23,7 +23,6 @@ class BootiqueApplicationTest {
     @Test
     fun `test bootique get products endpoint`() {
         val products = testRestTemplate.get<List<Product>>("/products")
-        assertThat(products.size).isEqualTo(4)
         assertThat(products[0].title).isEqualTo("iPhone X")
     }
 
