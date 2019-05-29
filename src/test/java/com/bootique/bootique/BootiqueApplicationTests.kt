@@ -53,6 +53,6 @@ inline fun <reified T> TestRestTemplate.postJson(url: String, json: String): Res
 // This should also be moved to a different location, but left here for clarity
 inline fun <reified T> TestRestTemplate.get(url: String): T = this.exchange(
         url, HttpMethod.GET, null, object : ParameterizedTypeReference<T>() {}
-).body
+)?.body ?: throw RuntimeException()
 
 
