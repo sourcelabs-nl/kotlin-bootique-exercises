@@ -72,7 +72,6 @@
             <artifactId>mockito-kotlin</artifactId>
             <version>${mockito-kotlin.version}</version>
         </dependency>
-
     </dependencies>
 
     <build>
