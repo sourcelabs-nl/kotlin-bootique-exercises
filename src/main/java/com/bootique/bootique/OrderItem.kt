@@ -8,7 +8,7 @@ import java.math.BigDecimal
 data class OrderItem(val productId: String, val quantity: Int, val price: BigDecimal = BigDecimal.ZERO) {
 
     /**
-     * Calculates the totalPrice of this item: price * quantity
+     * Calculated totalPrice of this item: price * quantity
      *
      * @return BigDecimal.ZERO if no price is defined
      */
