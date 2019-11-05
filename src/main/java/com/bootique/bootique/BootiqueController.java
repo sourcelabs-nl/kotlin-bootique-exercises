@@ -37,7 +37,7 @@ public class BootiqueController {
     public Basket addToBasket(@PathVariable("id") String id, @RequestBody OrderItem orderItem) {
         Product productById = productRepository.getProductById(orderItem.getProductId());
         if (productById == null) {
-            throw new RuntimeException("Product not found!");
+            throw new RuntimeException("Product with productId: "+ orderItem.getProductId() +" not found!");
         }
         Basket basket = basketRepository.getBasketById(id);
         basket.addOrderItem(new OrderItem(orderItem.getProductId(), orderItem.getQuantity(), productById.getListPrice()));
