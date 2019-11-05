@@ -1,7 +1,11 @@
 package com.bootique.bootique
 
 import org.springframework.http.MediaType
-import org.springframework.web.bind.annotation.*
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RestController
 
 /**
  * RESTful endpoints are exposed in this component.
@@ -19,7 +23,7 @@ class BootiqueController(private val productRepository: ProductRepository, priva
     fun addToBasket(@PathVariable id: String, @RequestBody orderItem: OrderItem): Basket {
         return basketRepository.getBasketById(id).apply {
             val product = productRepository.getProductById(orderItem.productId)
-                    ?: throw IllegalArgumentException("Product with productId: ${orderItem.productId} not found!")
+                    ?: throw RuntimeException("Product with productId: ${orderItem.productId} not found!")
             addOrderItem(OrderItem(orderItem.productId, orderItem.quantity, product.listPrice))
         }
     }

@@ -18,10 +18,10 @@ class ProductRepository {
 
     companion object {
         private val products = ConcurrentHashMap(mapOf(
-                "1" to Product("1", "iPhone X", "Apple", BigDecimal("989.99"))
-                , "2" to Product("2", "Galaxy S8", "Samsung", BigDecimal("699.99"))
-                , "3" to Product("3", "3310", "Nokia", BigDecimal("19.95"))
-                , "4" to Product("4", "Kermit", "KPN", BigDecimal("6.95"))
+                "1" to Product("1", "iPhone X", "Apple", BigDecimal("989.99")),
+                "2" to Product("2", "Galaxy S8", "Samsung", BigDecimal("699.99")),
+                "3" to Product("3", "3310", "Nokia", BigDecimal("19.95")),
+                "4" to Product("4", "Kermit", "KPN", BigDecimal("6.95"))
         ))
     }
 }
