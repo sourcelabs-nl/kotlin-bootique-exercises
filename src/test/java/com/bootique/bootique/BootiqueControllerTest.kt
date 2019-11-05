@@ -1,36 +1,26 @@
 package com.bootique.bootique
 
-import org.junit.*
-import org.junit.runner.*
-import org.mockito.*
-import org.mockito.junit.*
+import com.nhaarman.mockitokotlin2.mock
+import com.nhaarman.mockitokotlin2.whenever
 import org.assertj.core.api.Assertions.assertThat
-import org.mockito.Mockito.*
-import org.mockito.stubbing.*
+import org.junit.Test
+import org.junit.runner.RunWith
+import org.mockito.junit.MockitoJUnitRunner
 
 @RunWith(MockitoJUnitRunner::class)
 class BootiqueControllerTest {
 
-    @InjectMocks
-    private lateinit var bootiqueController: BootiqueController
-
-    @Mock
-    private lateinit var mockBasketRepository: BasketRepository
-
-    @Mock
-    private lateinit var mockProductRepository: ProductRepository
+    private val mockBasketRepository = mock<BasketRepository>()
+    private val mockProductRepository = mock<ProductRepository>()
+    private val bootiqueController = BootiqueController(mockProductRepository, mockBasketRepository)
 
     @Test
     fun `test retrieving basket functionality`() {
         val basketId = "BasketId"
         val basket = Basket()
-        whenever(mockBasketRepository.getBasketById(basketId)).thenReturn(basket)
-        assertThat(bootiqueController.getBasket(basketId)).isEqualTo(basket)
-        verify(mockBasketRepository).getBasketById(basketId)
-    }
-}
 
-// Move this to a utility class under normal circumstances, but left here for convenience.
-fun <T> whenever(methodCall: T): OngoingStubbing<T> {
-    return Mockito.`when`(methodCall)
+        whenever(mockBasketRepository.getBasketById(basketId)).thenReturn(basket)
+
+        assertThat(bootiqueController.getBasket(basketId)).isEqualTo(basket)
+    }
 }
