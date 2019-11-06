@@ -17,11 +17,11 @@ class ProductRepository {
     fun getProductById(productId: String): Product? = products[productId]
 
     companion object {
-        private val products = ConcurrentHashMap(mapOf(
-                "1" to Product("1", "iPhone X", "Apple", BigDecimal("989.99"))
-                , "2" to Product("2", "Galaxy S8", "Samsung", BigDecimal("699.99"))
-                , "3" to Product("3", "3310", "Nokia", BigDecimal("19.95"))
-                , "4" to Product("4", "Kermit", "KPN", BigDecimal("6.95"))
-        ))
+        private val products = ConcurrentHashMap(listOf(
+                Product("1", "iPhone X", "Apple", BigDecimal("989.99")),
+                Product("2", "Galaxy S8", "Samsung", BigDecimal("699.99")),
+                Product("3", "3310", "Nokia", BigDecimal("19.95")),
+                Product("4", "Kermit", "KPN", BigDecimal("6.95"))
+        ).associateBy { it.id })
     }
 }

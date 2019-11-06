@@ -25,6 +25,7 @@ fun main(args: Array<String>) {
                                 .apis(RequestHandlerSelectors.basePackage("com.bootique.bootique"))
                                 .build()
                     }
-                })
+                }
+        )
     }
 }
