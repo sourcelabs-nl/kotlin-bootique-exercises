@@ -8,22 +8,22 @@ import java.util.List;
  * Basket contains the order items for a specific user or session.
  */
 public class Basket {
-    private final List<OrderItem> orderItems;
+    private final List<OrderItem> items;
 
     public Basket() {
-        orderItems = new ArrayList<>();
+        items = new ArrayList<>();
     }
 
-    public Basket(List<OrderItem> orderItems) {
-        this.orderItems = orderItems;
+    public Basket(List<OrderItem> items) {
+        this.items = items;
     }
 
-    public List<OrderItem> getOrderItems() {
-        return orderItems;
+    public List<OrderItem> getItems() {
+        return items;
     }
 
     public void addOrderItem(OrderItem orderItem) {
-        orderItems.add(orderItem);
+        items.add(orderItem);
     }
 
     /**
@@ -32,6 +32,6 @@ public class Basket {
      * @return BigDecimal.ZERO in case of an empty basket.
      */
     public BigDecimal getTotalPrice() {
-        return orderItems.stream().map(OrderItem::getTotalPrice).reduce(BigDecimal.ZERO, BigDecimal::add);
+        return items.stream().map(OrderItem::getTotalPrice).reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 }
