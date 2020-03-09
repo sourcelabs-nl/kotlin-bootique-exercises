@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController
 /**
  * RESTful endpoints are exposed in this component.
  */
-@RestController
+//@RestController = disabled because we are using the router and handler functions.
 class BootiqueController(private val productRepository: ProductRepository, private val basketRepository: BasketRepository) {
 
     @GetMapping("/products")

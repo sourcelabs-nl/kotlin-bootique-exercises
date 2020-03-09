@@ -3,6 +3,7 @@ package com.bootique.bootique
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 import org.springframework.context.support.beans
+import org.springframework.web.servlet.function.router
 import springfox.documentation.builders.RequestHandlerSelectors
 import springfox.documentation.spi.DocumentationType
 import springfox.documentation.spring.web.plugins.Docket
@@ -24,6 +25,14 @@ fun main(args: Array<String>) {
                                 .select()
                                 .apis(RequestHandlerSelectors.basePackage("com.bootique.bootique"))
                                 .build()
+                    }
+                    bean<BootiqueHandler>()
+                    bean {
+                        router {
+                            GET("/products", ref<BootiqueHandler>()::products)
+                            GET("/baskets/{id}", ref<BootiqueHandler>()::getBasket)
+                            POST("/baskets/{id}/items", ref<BootiqueHandler>()::addToBasket)
+                        }
                     }
                 }
         )
