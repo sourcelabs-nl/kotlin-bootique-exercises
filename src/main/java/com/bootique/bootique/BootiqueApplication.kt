@@ -21,9 +21,9 @@ class BootiqueApplication {
     @Bean
     fun api(): Docket {
         return Docket(DocumentationType.SWAGGER_2)
-                .select()
-                .apis(RequestHandlerSelectors.basePackage("com.bootique.bootique"))
-                .build()
+            .select()
+            .apis(RequestHandlerSelectors.basePackage("com.bootique.bootique"))
+            .build()
     }
 
     /**
