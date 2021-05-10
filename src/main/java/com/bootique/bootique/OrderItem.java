@@ -38,7 +38,7 @@ public class OrderItem {
     }
 
     /**
-     * Calculated totalPrice of this item: price * quantity
+     * Calculates the totalPrice of this item: price * quantity
      *
      * @return BigDecimal.ZERO if no price is define
      */
