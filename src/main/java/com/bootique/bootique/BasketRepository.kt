@@ -10,10 +10,9 @@ import java.util.concurrent.ConcurrentHashMap
  */
 @Repository
 class BasketRepository {
-
-    fun getBasketById(id: String): Basket = baskets.getOrPut(id) { Basket() }
+    fun getBasketById(id: String): Basket = baskets.getOrDefault(id, Basket())
 
     companion object {
-        private val baskets = ConcurrentHashMap<String, Basket>()
+        private val baskets: MutableMap<String, Basket> = ConcurrentHashMap()
     }
 }
