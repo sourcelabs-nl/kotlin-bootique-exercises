@@ -18,14 +18,14 @@ class BootiqueApplication
 fun main(args: Array<String>) {
     runApplication<BootiqueApplication>(*args) {
         addInitializers(
-                beans {
-                    bean<Docket> {
-                        Docket(DocumentationType.SWAGGER_2)
-                                .select()
-                                .apis(RequestHandlerSelectors.basePackage("com.bootique.bootique"))
-                                .build()
-                    }
+            beans {
+                bean<Docket> {
+                    Docket(DocumentationType.SWAGGER_2)
+                        .select()
+                        .apis(RequestHandlerSelectors.basePackage("com.bootique.bootique"))
+                        .build()
                 }
+            }
         )
     }
 }
