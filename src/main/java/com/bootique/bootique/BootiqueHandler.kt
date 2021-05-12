@@ -1,5 +1,7 @@
 package com.bootique.bootique
 
+import org.springframework.http.HttpStatus
+import org.springframework.web.server.ResponseStatusException
 import org.springframework.web.servlet.function.ServerRequest
 import org.springframework.web.servlet.function.ServerResponse
 
@@ -15,12 +17,10 @@ class BootiqueHandler(private val productRepository: ProductRepository, private 
     fun addToBasket(request: ServerRequest): ServerResponse {
         val orderItem = request.body(OrderItem::class.java)
         val id = request.pathVariable("id")
-
-        val basket = basketRepository.getBasketById(id).apply {
-            val product = productRepository.getProductById(orderItem.productId)
-                    ?: throw RuntimeException("Product with productId: ${orderItem.productId} not found!")
-            addOrderItem(OrderItem(orderItem.productId, orderItem.quantity, product.listPrice))
-        }
+        val productById = productRepository.getProductById(orderItem.productId)
+            ?: throw ResponseStatusException(HttpStatus.BAD_REQUEST, "Product with id: ${orderItem.productId} not found.")
+        val basket = basketRepository.getBasketById(id)
+        basket.addOrderItem(orderItem.copy(price = productById.listPrice))
         return ServerResponse.ok().body(basket)
     }
 }
