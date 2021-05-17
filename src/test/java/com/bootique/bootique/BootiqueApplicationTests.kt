@@ -1,13 +1,14 @@
 package com.bootique.bootique
 
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.web.client.TestRestTemplate
 import org.springframework.boot.test.web.client.exchange
 import org.springframework.boot.test.web.client.postForEntity
+import org.springframework.context.ApplicationContextInitializer
+import org.springframework.context.support.GenericApplicationContext
 import org.springframework.http.HttpEntity
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpMethod
@@ -15,12 +16,15 @@ import org.springframework.http.MediaType
 import org.springframework.test.context.ContextConfiguration
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@ContextConfiguration
-@Disabled("Routes not working")
-class BootiqueApplicationTest {
+@ContextConfiguration(initializers = [BootiqueApplicationTest::class])
+class BootiqueApplicationTest : ApplicationContextInitializer<GenericApplicationContext> {
 
     @Autowired
     private lateinit var testRestTemplate: TestRestTemplate
+
+    override fun initialize(ctx: GenericApplicationContext) {
+        handlers().initialize(ctx) // workaround for initializing the bean definition dsl.
+    }
 
     @Test
     fun `get products endpoint should return a list of products`() {
