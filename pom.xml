@@ -19,6 +19,7 @@
 
     <properties>
         <java.version>11</java.version>
+        <kotlin.compiler.languageVersion>2.0</kotlin.compiler.languageVersion>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <springfox.version>2.9.2</springfox.version>
